@@ -1,54 +1,49 @@
-# React + TypeScript + Vite
+# Project Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Name**: Camping Trip Planner
 
-Currently, two official plugins are available:
+**Goal**: Help users efficiently plan and organize camping trips with features like itinerary management, gear checklists, weather forecasting, and location tracking.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Target Audience**: Outdoor enthusiasts, families, groups, solo travelers.
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Features & Functionality
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 1. User Registration & Authentication
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+* Sign up, login via email or OAuth (Google, Facebook, etc.).
+* Firebase
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### 2. Trip Planning & Itinerary Management
+
+* Create and manage camping trips.
+* Set trip dates, locations, and members.
+* Add activities (hiking, fishing, campfire).
+
+### 3. Gear Checklist & Packing Suggestions
+
+* Customizable packing lists.
+* Suggested checklists based on trip type (backpacking, car camping, etc.).
+* Sync with weather conditions for recommendations.
+
+### 4. Weather Forecast Integration
+
+* Real-time weather updates for selected camping locations.
+* Warnings for extreme weather conditions.
+* API: OpenWeatherMap or WeatherAPI.
+
+
+### 5. Budget planning.
+
+
+Deployment server: Versel.com
+
+https://camping-trip-planer.vercel.app/
+
+Miro:
+
+
+https://miro.com/welcomeonboard/TmYyUzRNbzdVWXR0czE0ZXZVZmw3NkNzWTdqUUFkdVArSzdYM0VOdi9GWnBvREppdWZOTEpUbFpEN20rUDNuUEpHc09BanRjMFJpUnRxK252TVJOSGc0eFFQNStaYVZSQzgyaU82elZEc1JuMVovVndSVDdHbVhRL0J3bitZUEJBS2NFMDFkcUNFSnM0d3FEN050ekl3PT0hdjE=?share_link_id=239971181283
+
+
