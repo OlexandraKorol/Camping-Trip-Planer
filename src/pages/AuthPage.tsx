@@ -81,7 +81,7 @@ export const AuthPage = () => {
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: "stretch",
           gap: 4,
           width: "90%",
           maxWidth: "1200px",
@@ -93,7 +93,7 @@ export const AuthPage = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "flex-start",
+            alignItems: { xs: "center", md: "flex-start" },
             textAlign: "center",
             padding: 2,
           }}
@@ -129,7 +129,7 @@ export const AuthPage = () => {
               />
               <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
                 <Typography style={{ textAlign: 'center' }} variant="caption">
-                  Don't have an account?
+                  Don't have an account?{" "}
                    <Typography onClick={handleOpenModal} style={{ cursor: "pointer", textAlign: 'center' }} variant="caption" color="primary">Sign up</Typography>
                 </Typography>
                 <RegistrationModal isOpen={isRegistrationModalOpen} handleClose={handleCloseModal} />
