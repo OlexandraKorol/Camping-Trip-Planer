@@ -87,7 +87,12 @@ export const AuthPage = () => {
               <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
                 <Typography style={{ textAlign: 'center' }} variant="caption">
                   Don't have an account?{" "}
-                  <Typography onClick={handleOpenModal} style={{ cursor: "pointer", textAlign: 'center' }} variant="caption" color="primary">Sign up</Typography>
+                  <Typography
+                    onClick={handleOpenModal}
+                    style={{ cursor: "pointer", textAlign: 'center' }}
+                    variant="caption" color="primary">
+                    Sign up
+                  </Typography>
                 </Typography>
                 <RegistrationModal isOpen={isRegistrationModalOpen} handleClose={handleCloseModal} />
                 <NoAccountModal isOpen={isAccountNotFoundModalOpen} handleClose={() => setAccountNotFoundModalOpen(false)} handleOpenRegistration={handleOpenModal} />
