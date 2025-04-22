@@ -1,4 +1,4 @@
-import { Box, Modal, Typography, Button, Divider } from "@mui/material";
+import { Box, Modal, Typography, Button } from "@mui/material";
 import { useState } from "react";
 import { CustomTextField } from "./CustomTextField";
 import { GoogleIcon } from "./CustomGoogleIcon";
