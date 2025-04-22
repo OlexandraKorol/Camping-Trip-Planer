@@ -1,5 +1,7 @@
-import { Tabs, Tab, AppBar, Toolbar, Box } from "@mui/material";
+import { Tabs, Tab, AppBar, Toolbar, Box, Button } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
+import { doSignOut } from "../services/auth";
+import { useAuth } from "../context/AuthContext";
 
 const tabs = [
   { label: "Trip Planning", path: "/" },
@@ -10,11 +12,17 @@ const tabs = [
 
 export const NavBar = () => {
   const location = useLocation();
+  const { setIsUserLoggedIn } = useAuth();
   const currentTab = tabs.findIndex(tab => tab.path === location.pathname);
+
+  const handleLogOut = () => {
+    doSignOut();
+    setIsUserLoggedIn(false)
+  }
 
   return (
     <AppBar position="static" color="default" component="nav">
-      <Toolbar sx={{ justifyContent: "space-between" }}>
+      <Toolbar sx={{ justifyContent: "space-between", flexDirection: "row" }}>
         <Box>
           <Tabs
             value={currentTab !== -1 ? currentTab : false}
@@ -32,6 +40,7 @@ export const NavBar = () => {
             ))}
           </Tabs>
         </Box>
+        <Button onClick={handleLogOut} type="button" variant="text" color="primary">log out</Button>
       </Toolbar>
     </AppBar>
   );

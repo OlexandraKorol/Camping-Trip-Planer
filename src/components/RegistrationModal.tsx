@@ -21,12 +21,10 @@ export const RegistrationModal: React.FC<IRegistrationModal> = ({ isOpen, handle
       return;
     }
 
-
     if (password !== confirmPassword) {
       setErrorMessage("Passwords do not match.");
       return;
     }
-
 
     await doCreateUserWithEmailAndPassword(email, password)
     alert("Account created successfully!");
@@ -34,7 +32,6 @@ export const RegistrationModal: React.FC<IRegistrationModal> = ({ isOpen, handle
   };
 
   const handleGoogleSignUp = async () => {
-
     await doGoogleSignInWithGoogle()
     handleClose();
   };
@@ -94,16 +91,13 @@ export const RegistrationModal: React.FC<IRegistrationModal> = ({ isOpen, handle
           <Button
             variant="contained"
             fullWidth
-
             onClick={handleRegister}
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, mb: 2 }}
           >
             Register
           </Button>
 
         </Box>
-
-        <Divider sx={{ my: 2 }}>or</Divider>
 
         <Button
           variant="outlined"

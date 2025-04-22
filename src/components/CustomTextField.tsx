@@ -24,6 +24,7 @@ export const CustomTextField: React.FC<ICustomTextField> = ({
       onChange={onChange}
       placeholder={placeholder}
       autoFocus
+      style={{ marginBottom: '5px' }}
       type={name === 'password' ? 'password' : 'text'}
       required={required}
       fullWidth

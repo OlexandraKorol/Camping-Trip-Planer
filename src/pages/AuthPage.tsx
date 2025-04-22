@@ -8,19 +8,22 @@ import { RegistrationModal } from "../components/RegistrationModal";
 import { useAuth } from "../context/AuthContext";
 import { doGoogleSignInWithGoogle, doSignInWithEmailAndPassword } from "../services/auth";
 import { LoginForm } from "../components/LoginForm";
+import { fetchSignInMethodsForEmail } from "firebase/auth";
+import { auth } from "../services/firebase";
+import { NoAccountModal } from "../components/NoAccountModal";
 
 export const AuthPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState({ hasError: false, message: "" });
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
+  const [isAccountNotFoundModalOpen, setAccountNotFoundModalOpen] = useState(false);
 
-  const { setIsUserLoggedIn, isUserLoggedIn } = useAuth();
+  const { setIsUserLoggedIn } = useAuth();
 
   const handleInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
       setFormData((prev) => ({ ...prev, [name]: value }));
-  
       setError({ hasError: false, message: "" });
     },
     []
@@ -30,18 +33,22 @@ export const AuthPage = () => {
     e.preventDefault();
     const { email, password } = formData;
 
-    console.log("Login data:", formData);
-
-    console.log({isUserLoggedIn});
-
     if (!email || !password) {
       setError({ hasError: true, message: "Please fill in all fields." });
       return;
     }
     try {
-      await doSignInWithEmailAndPassword(email, password);      
+
+      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+      if (signInMethods.length === 0) {
+
+        setError({ hasError: true, message: "User not registered. Please sign up." });
+        setAccountNotFoundModalOpen(true); 
+        return;
+      }
+      await doSignInWithEmailAndPassword(email, password);
       setIsUserLoggedIn(true);
-    } catch (error) {
+    } catch (error: any) {
       setError({ hasError: true, message: "Failed to sign in. Please check your credentials." });
     }
   };
@@ -55,8 +62,8 @@ export const AuthPage = () => {
     }
   };
 
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+  const handleOpenModal = () => setIsRegistrationModalOpen(true);
+  const handleCloseModal = () => setIsRegistrationModalOpen(false);
 
   return (
     <div
@@ -120,12 +127,13 @@ export const AuthPage = () => {
                 onLogin={handleLogin}
                 onGoogleSignIn={handleGoogleSignIn}
               />
-              
               <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
-                <Typography onClick={handleOpenModal} style={{ cursor: "pointer", textAlign: 'center' }} variant="body2">
-                  Don't have an account? Sign up
+                <Typography style={{ textAlign: 'center' }} variant="caption">
+                  Don't have an account?
+                   <Typography onClick={handleOpenModal} style={{ cursor: "pointer", textAlign: 'center' }} variant="caption" color="primary">Sign up</Typography>
                 </Typography>
-                <RegistrationModal isOpen={isModalOpen} handleClose={handleCloseModal} />
+                <RegistrationModal isOpen={isRegistrationModalOpen} handleClose={handleCloseModal} />
+                <NoAccountModal isOpen={isAccountNotFoundModalOpen} handleClose={() => setAccountNotFoundModalOpen(false)} handleOpenRegistration={handleOpenModal} />
               </Box>
             </CardContent>
           </Card>
