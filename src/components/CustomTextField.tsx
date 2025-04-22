@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material"
 
 interface ICustomTextField {
-  error: boolean;
+  error?: boolean;
   name: string;
   placeholder: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -17,7 +17,6 @@ export const CustomTextField: React.FC<ICustomTextField> = ({
   onChange,
   required,
   value,
-  errorMessage
 }) => {
   return (
     <TextField
@@ -25,11 +24,11 @@ export const CustomTextField: React.FC<ICustomTextField> = ({
       onChange={onChange}
       placeholder={placeholder}
       autoFocus
+      type={name === 'password' ? 'password' : 'text'}
       required={required}
       fullWidth
       error={error}
       name={name}
-      aria-errormessage={errorMessage}
       variant="standard"
       color={error ? 'error' : 'primary'}
     />

@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
-
   const initializeUser = (user: User | null) => {
     if (user) {
       setCurrentUser(user);
@@ -34,24 +33,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(false);
   };
 
-  useEffect(
-    () => {
-      const unsubscribe = auth.onAuthStateChanged((user) => {
-        console.log("User state changed:", user);
-        initializeUser(user);
-        if (user) {
-          setCurrentUser(user);
-          setIsUserLoggedIn(true);
-        } else {
-          setCurrentUser(undefined);
-          setIsUserLoggedIn(false);
-        }
-        setIsLoading(false);
-      });
-      return () => unsubscribe()
-    },
-    []
-  )
+  useEffect(() => {
+    initializeUser(auth.currentUser)
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setCurrentUser(user);
+        setIsUserLoggedIn(true);
+      } else {
+        setCurrentUser(undefined);
+        setIsUserLoggedIn(false);
+      }
+      setIsLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const value = {
     currentUser,

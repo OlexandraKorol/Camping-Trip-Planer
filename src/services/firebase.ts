@@ -1,6 +1,5 @@
-// src/firebase.js
 import { initializeApp } from "firebase/app";
-import {getAuth} from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 
 const firebaseConfig = {
@@ -10,7 +9,7 @@ const firebaseConfig = {
   storageBucket: "camping-trip-planer.firebasestorage.app",
   messagingSenderId: "892149960928",
   appId: "1:892149960928:web:0859d9968ebd0e29bf4085",
-  measurementId: "G-CH3ZRFRVGR",
+  measurementId: "G-CH3ZRFRVGR"
 };
 
 
