@@ -10,16 +10,12 @@ export const doCreateUserWithEmailAndPassword = async (
   email: string,
   password: string
 ) => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    return userCredential.user;
-  } catch (error: any) {
-    throw error;
-  }
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+  return userCredential.user;
 };
 
 export const doSignInWithEmailAndPassword = async (
@@ -34,7 +30,7 @@ export const doSignInWithEmailAndPassword = async (
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      return { errorCode, errorMessage, };
+      return { errorCode, errorMessage };
     });
 };
 
