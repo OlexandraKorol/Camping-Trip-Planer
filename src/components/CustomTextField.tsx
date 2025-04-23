@@ -8,6 +8,8 @@ interface ICustomTextField {
   required: boolean;
   value: string | number
   errorMessage?: string
+  type?:string
+  multiline?: boolean
 }
 
 export const CustomTextField: React.FC<ICustomTextField> = ({
@@ -17,6 +19,8 @@ export const CustomTextField: React.FC<ICustomTextField> = ({
   onChange,
   required,
   value,
+  type='text',
+  multiline=false
 }) => {
   return (
     <TextField
@@ -25,13 +29,16 @@ export const CustomTextField: React.FC<ICustomTextField> = ({
       placeholder={placeholder}
       autoFocus
       style={{ marginBottom: '5px' }}
-      type={name === 'password' ? 'password' : 'text'}
+      type={type}
       required={required}
       fullWidth
       error={error}
       name={name}
-      variant="standard"
+      multiline={multiline}
+      variant="outlined"
       color={error ? 'error' : 'primary'}
+      sx={{mb: 3}}
+      rows={multiline ? 6 : 1}
     />
   )
 }

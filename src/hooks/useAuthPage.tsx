@@ -34,6 +34,7 @@ export const useAuthPage = () => {
     }
     try {
       const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+      //функція завжли повертає масив, якщо масив пустий - то юзер не зареєстрований. А вона повертає завжди пустий масив, пофіксити, тут перевірка на те, чи юзев зареєстрований і показувати модалку
       if (signInMethods.length === 0) {
         setError({ hasError: true, message: "User not registered. Please sign up." });
         setAccountNotFoundModalOpen(true);

@@ -41,6 +41,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ formData, error, onInputCh
           onChange={onInputChange}
           required={true}
           value={formData.password}
+          type="password"
         />
       </FormControl>
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 2, mb: 2 }}>

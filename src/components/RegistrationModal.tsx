@@ -54,7 +54,7 @@ export const RegistrationModal: React.FC<IRegistrationModal> = ({ isOpen, handle
           boxShadow: 24,
         }}
       >
-        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
+        <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
           Create an Account
         </Typography>
 
@@ -80,13 +80,15 @@ export const RegistrationModal: React.FC<IRegistrationModal> = ({ isOpen, handle
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            type="password"
           />
           <CustomTextField
-            name="password"
+            name="confirmPassword"
             placeholder="Confirm Password"
             required
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            type="password"
           />
           <Button
             variant="contained"

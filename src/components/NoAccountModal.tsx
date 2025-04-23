@@ -25,7 +25,7 @@ export const NoAccountModal: React.FC<INoAccountModal> = ({ isOpen, handleClose,
           boxShadow: 24,
         }}
       >
-        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2, textAlign: "center" }}>
+        <Typography variant="h6" component="h2" sx={{ mb: 2, textAlign: "center" }}>
           Sorry, we don't have a account for you yet <SentimentDissatisfiedIcon color="primary" />
         </Typography>
 
