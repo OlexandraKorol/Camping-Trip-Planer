@@ -2,6 +2,7 @@ import { Modal, Box, Button, Checkbox, FormControlLabel, Typography, Card, CardC
 import { TripData } from "../types/trips";
 import { CustomTextField } from "./CustomTextField";
 import AddIcon from '@mui/icons-material/Add';
+import { Link } from "react-router-dom";
 
 interface INewTripModal {
   isOpen: boolean;
@@ -9,9 +10,10 @@ interface INewTripModal {
   formData: TripData
   setShowModal: (value: boolean) => void
   handleSubmit: () => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
 }
 
-export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, formData, setShowModal, handleSubmit }) => {
+export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, formData, setShowModal, handleSubmit, onChange }) => {
   return (
     <Modal
       open={isOpen}
@@ -50,7 +52,7 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
                 <CustomTextField
                   name="tripName"
                   value={formData.tripName}
-                  onChange={() => { }}
+                  onChange={onChange}
                   placeholder={"Trip name"}
                   required={true}
                 />
@@ -59,7 +61,7 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
                     type="date"
                     name="startDate"
                     value={formData.startDate}
-                    onChange={() => { }}
+                    onChange={onChange}
                     placeholder={"Start date"}
                     required={true}
                   />
@@ -67,7 +69,7 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
                     type="date"
                     name="endDate"
                     value={formData.endDate}
-                    onChange={() => { }}
+                    onChange={onChange}
                     placeholder={"End date"}
                     required={true}
                   />
@@ -76,19 +78,21 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
                   name="location"
                   placeholder="Location"
                   value={formData.location}
-                  onChange={() => { }}
+                  onChange={onChange}
                   required={false}
                 />
               </Box>
 
               <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
-                <Button type="button" variant="outlined" onClick={() => { }}>
-                  Chech the weather
-                </Button>
+                <Link to={`/weather`}>
+                  <Button type="button" variant="outlined">
+                    Chech the weather
+                  </Button>
+                </Link>
                 <CustomTextField
                   name="notes"
                   value={formData.notes}
-                  onChange={() => { }}
+                  onChange={onChange}
                   placeholder="Notes"
                   required={false}
                   multiline
@@ -98,7 +102,7 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
                     <Checkbox
                       name="campsiteBooked"
                       checked={formData.campsiteBooked}
-                      onChange={() => { }}
+                      onChange={onChange}
                     />
                   }
                   label={"Camping booked?"}
@@ -116,17 +120,16 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
           <CardContent sx={{ display: "flex", gap: 2, alignItems: "center" }}>
 
             <CustomTextField
-              name="customActivity"
-              value={""}
-              onChange={() => { }}
-              placeholder="Add custom activity"
+              name="activities"
+              value={formData.activities.join(", ")}
+              onChange={onChange}
+              placeholder="Add activity"
               required={false}
             />
 
             <Fab color="primary" aria-label="add" sx={{ width: 40, height: 40 }}>
               <AddIcon />
             </Fab>
-
           </CardContent>
         </Card>
 

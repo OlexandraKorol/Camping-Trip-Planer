@@ -1,31 +1,40 @@
 import { useEffect, useState } from "react";
-import { auth, db } from "../services/firebase";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { db } from "../services/firebase";
 import { TripData } from "../types/trips";
 
 export const useTrips = () => {
-  const [trips, setTrips] = useState<TripData[]>([]);
+  const [trips, setTrips] = useState<(TripData & { id: string })[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const tripsCollection = collection(db, "trips");
+
   const fetchTrips = async () => {
-    const user = auth.currentUser;
-    if (!user) return;
-
-    const tripsRef = collection(db, "users", user.uid, "trips");
-    const querySnapshot = await getDocs(tripsRef);
-    const data = querySnapshot.docs.map(doc => ({
-      ...doc.data() as TripData,
+    setLoading(true);
+    const snapshot = await getDocs(tripsCollection);
+    const tripsData = snapshot.docs.map((doc) => ({
+      ...doc.data(),
       id: doc.id,
-    }));
-
-    setTrips(data);
+    })) as (TripData & { id: string })[];
+    setTrips(tripsData);
     setLoading(false);
   };
 
-  const addTrip = async (tripData: any) => {
-    const user = auth.currentUser;
-    const tripsRef = collection(db, "users", user!.uid, "trips");
-    await addDoc(tripsRef, tripData);
+
+  const editTrip = async (id: string, updatedTrip: TripData) => {
+    const tripDoc = doc(db, "trips", id);
+    await updateDoc(tripDoc, updatedTrip as Partial<TripData>);
+    fetchTrips();
+  };
+
+  const deleteTrip = async (id: string) => {
+    const tripDoc = doc(db, "trips", id);
+    await deleteDoc(tripDoc);
+    fetchTrips();
+  };
+
+  const addTrip = async (trip: TripData) => {
+    await addDoc(tripsCollection, trip);
     fetchTrips();
   };
 
@@ -33,5 +42,12 @@ export const useTrips = () => {
     fetchTrips();
   }, []);
 
-  return { trips, loading, addTrip };
+  return {
+    trips,
+    loading,
+    addTrip,
+    editTrip,
+    deleteTrip
+  };
 };
+

@@ -18,8 +18,8 @@ const emptyTrip: TripData = {
 };
 
 export const TripPlanning = () => {
-  const { trips, addTrip } = useTrips();
-  const [showModal, setShowModal] = useState(false); // Початкове значення false
+  const { trips, addTrip, editTrip, deleteTrip } = useTrips();
+  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState<TripData>(emptyTrip);
 
 
@@ -29,12 +29,31 @@ export const TripPlanning = () => {
     setShowModal(false);
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+
+    if (name === "activities") {
+      const activitiesArray = value.split(",").map((activity) => activity.trim());
+      setFormData((prev) => ({
+        ...prev,
+        [name]: activitiesArray,
+      }));
+    } else {
+
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
   const handleEdit = (id: string) => {
-    console.log(`Edit trip with id: ${id}`);
+    setShowModal(true);
+    editTrip(id, formData)
   };
 
   const handleDelete = (id: string) => {
-    console.log(`Delete trip with id: ${id}`);
+    deleteTrip(id);
   };
 
   return (
@@ -72,6 +91,7 @@ export const TripPlanning = () => {
         formData={formData}
         setShowModal={setShowModal}
         handleSubmit={handleSubmit}
+        onChange={handleInputChange}
       />
     </div>
   );
