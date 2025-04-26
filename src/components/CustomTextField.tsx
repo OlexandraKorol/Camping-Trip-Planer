@@ -5,11 +5,12 @@ interface ICustomTextField {
   name: string;
   placeholder: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  required: boolean;
+  required?: boolean;
   value: string | number
   errorMessage?: string
   type?:string
   multiline?: boolean
+  helperText?: string
 }
 
 export const CustomTextField: React.FC<ICustomTextField> = ({
@@ -17,10 +18,11 @@ export const CustomTextField: React.FC<ICustomTextField> = ({
   name,
   placeholder,
   onChange,
-  required,
+  required=false,
   value,
   type='text',
-  multiline=false
+  multiline=false,
+  helperText,
 }) => {
   return (
     <TextField
@@ -37,6 +39,7 @@ export const CustomTextField: React.FC<ICustomTextField> = ({
       multiline={multiline}
       variant="outlined"
       color={error ? 'error' : 'primary'}
+      helperText={helperText}
       sx={{mb: 3}}
       rows={multiline ? 6 : 1}
     />

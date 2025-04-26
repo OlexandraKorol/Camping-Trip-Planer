@@ -5,6 +5,8 @@ import { TripData } from "../types/trips";
 import { NewTripModal } from "../components/NewTripModal";
 import { TripCard } from "../components/TripCard";
 import { EmptyTripPlanningComponent } from "../components/EmptyTripPlanningComponent";
+import { CreateTripButton } from "../components/CustomButtons";
+import { validateNewTripForm } from "../services/utils";
 
 const emptyTrip: TripData = {
   tripName: "",
@@ -21,9 +23,14 @@ export const TripPlanning = () => {
   const { trips, addTrip, editTrip, deleteTrip } = useTrips();
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState<TripData>(emptyTrip);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({}); 
 
+  const validateForm = () => validateNewTripForm(formData, setErrors);
 
   const handleSubmit = async () => {
+    if (!validateForm()) {
+      return;
+    }
     await addTrip(formData);
     setFormData(emptyTrip);
     setShowModal(false);
@@ -39,17 +46,21 @@ export const TripPlanning = () => {
         [name]: activitiesArray,
       }));
     } else {
-
       setFormData((prev) => ({
         ...prev,
         [name]: value,
       }));
     }
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
   };
 
   const handleEdit = (id: string) => {
     setShowModal(true);
-    editTrip(id, formData)
+    editTrip(id, formData);
   };
 
   const handleDelete = (id: string) => {
@@ -57,7 +68,7 @@ export const TripPlanning = () => {
   };
 
   return (
-    <div className="container flex flex-col p-5" >
+    <div className="container flex flex-col p-5">
       {trips.length ? (
         <>
           <Typography variant="h4" color="text.secondary" gutterBottom>
@@ -73,6 +84,7 @@ export const TripPlanning = () => {
               />
             ))}
           </Box>
+          <CreateTripButton onCreateTrip={() => setShowModal(true)} />
         </>
       ) : (
         <EmptyTripPlanningComponent onCreateTrip={() => setShowModal(true)} />
@@ -85,6 +97,7 @@ export const TripPlanning = () => {
         setShowModal={setShowModal}
         handleSubmit={handleSubmit}
         onChange={handleInputChange}
+        errors={errors}
       />
     </div>
   );

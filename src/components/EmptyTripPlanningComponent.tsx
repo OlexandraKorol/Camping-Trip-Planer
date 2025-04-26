@@ -1,5 +1,5 @@
-import { Box, Typography, Button } from "@mui/material"
-import AddIcon from '@mui/icons-material/Add';
+import { Box, Typography } from "@mui/material"
+import { CreateTripButton } from "./CustomButtons";
 
 interface IEmptyTripPlanningPage {
   onCreateTrip: () => void;
@@ -21,14 +21,7 @@ export const EmptyTripPlanningComponent: React.FC<IEmptyTripPlanningPage> = ({ o
         Tap here to create your first trip!
       </Typography>
 
-      <Button
-        onClick={onCreateTrip}
-        variant="outlined"
-        color="primary"
-        startIcon={<AddIcon />}
-        sx={{ mt: 2, mb: 2 }} >
-        Create trip
-      </Button>
+      <CreateTripButton onCreateTrip={onCreateTrip} />
     </Box>
   )
 }
