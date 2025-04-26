@@ -23,16 +23,7 @@ export const AuthPage = () => {
   } = useAuthPage();
 
   return (
-    <div
-      className="container"
-      style={{
-        minHeight: "100vh",
-        minWidth: "100vw",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className="container flex min-h-screen min-w-full justify-center items-center">
       <Box
         sx={{
           display: "flex",

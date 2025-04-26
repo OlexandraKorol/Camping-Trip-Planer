@@ -57,14 +57,7 @@ export const TripPlanning = () => {
   };
 
   return (
-    <div
-      className="container"
-      style={{
-        display: "flex",
-        padding: 20,
-        flexDirection: "column",
-      }}
-    >
+    <div className="container flex flex-col p-5" >
       {trips.length ? (
         <>
           <Typography variant="h4" color="text.secondary" gutterBottom>

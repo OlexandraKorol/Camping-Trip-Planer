@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { BudgetPage } from "../pages/BudgetPage";
-import { PackingChecklist } from "../pages/PackingChecklist";
-import { TripPlanning } from "../pages/TripPlanning";
+import { PackingChecklist } from "../pages/PackingChecklistPage";
+import { TripPlanning } from "../pages/TripPlanningPage";
 import { WeatherPage } from "../pages/WeatherPage";
 
 export const AppRouter = () => {

@@ -16,7 +16,6 @@ export const TripCard: React.FC<TripCardProps> = ({ trip, onEdit, onDelete }) =>
       <Card
         sx={{
           maxWidth: '100%',
-          // margin: "auto",
           boxShadow: 3,
           borderRadius: 2,
           overflow: "hidden",
