@@ -1,3 +1,4 @@
+import { styled } from "@mui/material/styles";
 import { Modal, Box, Button, Checkbox, FormControlLabel, Typography, Card, CardContent } from "@mui/material";
 import { TripData } from "../types/trips";
 import { CustomTextField } from "./CustomTextField";
@@ -26,16 +27,7 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
         justifyContent: "center",
       }}
     >
-      <Box
-        sx={{
-          backgroundColor: "white",
-          padding: 4,
-          borderRadius: 2,
-          boxShadow: 24,
-          maxHeight: "90vh",
-          overflowY: "auto",
-        }}
-      >
+      <StyledModalBox>
         <Typography gutterBottom sx={{ mb: 1.5 }} variant="h5">
           Trip Creation
         </Typography>
@@ -43,30 +35,28 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
         <Card variant="elevation" sx={{ padding: 2, borderRadius: 2 }}>
           <CardContent>
             <Typography gutterBottom sx={{ color: "text.secondary", mb: 1.5 }} variant="subtitle1">
-              Overwiew
+              Overview
             </Typography>
 
-
-            <Box sx={{ display: "flex", gap: 4 }}>
-              <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
+            <ModalContentBox>
+              <Column>
                 <CustomTextField
                   name="tripName"
                   value={formData.tripName}
                   onChange={onChange}
                   placeholder="Trip name"
-                  required={true}
+                  required
                   error={!!errors.tripName}
                   helperText={errors.tripName}
                 />
                 <Box sx={{ display: "flex", gap: 2 }}>
-
                   <CustomTextField
                     type="date"
                     name="startDate"
                     value={formData.startDate}
                     onChange={onChange}
                     placeholder="Start date"
-                    required={true}
+                    required
                     error={!!errors.startDate}
                     helperText={errors.startDate}
                   />
@@ -76,7 +66,7 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
                     value={formData.endDate}
                     onChange={onChange}
                     placeholder="End date"
-                    required={true}
+                    required
                     error={!!errors.endDate}
                     helperText={errors.endDate}
                   />
@@ -86,13 +76,12 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
                   value={formData.location}
                   onChange={onChange}
                   placeholder="Location"
-                  required={false}
                   error={!!errors.location}
                   helperText={errors.location}
                 />
-              </Box>
+              </Column>
 
-              <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
+              <Column>
                 <Link to={`/weather`}>
                   <Button type="button" variant="outlined">
                     Check the weather
@@ -103,7 +92,6 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
                   value={formData.notes}
                   onChange={onChange}
                   placeholder="Notes"
-                  required={false}
                   multiline
                 />
                 <FormControlLabel
@@ -123,37 +111,64 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
                   }
                   label={"Camping booked?"}
                 />
-              </Box>
-            </Box>
-
+              </Column>
+            </ModalContentBox>
           </CardContent>
         </Card>
+
         <Card variant="elevation" sx={{ padding: 2, borderRadius: 2, mt: 2 }}>
           <Typography gutterBottom sx={{ color: "text.secondary", mb: 1.5 }} variant="subtitle1">
             Activities
           </Typography>
           <CardContent sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-
             <CustomTextField
               name="activities"
               value={formData.activities.join(", ")}
               onChange={onChange}
               placeholder="Add activity"
-              helperText="Add activities separating with comas"
-              required={false}
+              helperText="Add activities separated with commas"
             />
           </CardContent>
         </Card>
 
-        <Box sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2, mt: 2 }}>
+        <ButtonGroup>
           <Button onClick={handleSubmit} variant="contained">
             Save
           </Button>
-          <Button onClick={() => setShowModal(false)} variant="outlined">Cancel</Button>
-        </Box>
-      </Box>
+          <Button onClick={() => setShowModal(false)} variant="outlined">
+            Cancel
+          </Button>
+        </ButtonGroup>
+      </StyledModalBox>
     </Modal>
   );
 };
 
+const StyledModalBox = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(4),
+  borderRadius: theme.shape.borderRadius,
+  boxShadow: theme.shadows[24],
+  maxHeight: "90vh",
+  overflowY: "auto",
+}));
 
+const ModalContentBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: theme.spacing(4),
+}));
+
+const Column = styled(Box)(({ theme }) => ({
+  flex: 1,
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.spacing(2),
+}));
+
+const ButtonGroup = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  gap: theme.spacing(2),
+  marginTop: theme.spacing(2),
+}));

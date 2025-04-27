@@ -1,3 +1,4 @@
+import { styled } from "@mui/material/styles";
 import { Box, Modal, Typography, Button } from "@mui/material";
 import { useState } from "react";
 import { CustomTextField } from "./CustomTextField";
@@ -26,13 +27,13 @@ export const RegistrationModal: React.FC<IRegistrationModal> = ({ isOpen, handle
       return;
     }
 
-    await doCreateUserWithEmailAndPassword(email, password)
+    await doCreateUserWithEmailAndPassword(email, password);
     alert("Account created successfully!");
     handleClose();
   };
 
   const handleGoogleSignUp = async () => {
-    await doGoogleSignInWithGoogle()
+    await doGoogleSignInWithGoogle();
     handleClose();
   };
 
@@ -43,17 +44,7 @@ export const RegistrationModal: React.FC<IRegistrationModal> = ({ isOpen, handle
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box
-        sx={{
-          width: 400,
-          backgroundColor: "white",
-          padding: 4,
-          borderRadius: 2,
-          margin: "auto",
-          marginTop: "20vh",
-          boxShadow: 24,
-        }}
-      >
+      <StyledModalBox>
         <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
           Create an Account
         </Typography>
@@ -111,11 +102,21 @@ export const RegistrationModal: React.FC<IRegistrationModal> = ({ isOpen, handle
         </Button>
 
         {errorMessage && (
-          <Typography variant="body2" color="error" sx={{ textAlign: "center" }}>
+          <Typography variant="body2" color="error" sx={{ textAlign: "center", mt: 2 }}>
             {errorMessage}
           </Typography>
         )}
-      </Box>
+      </StyledModalBox>
     </Modal>
   );
 };
+
+const StyledModalBox = styled(Box)(({ theme }) => ({
+  width: 400,
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(4),
+  borderRadius: theme.shape.borderRadius,
+  margin: "auto",
+  marginTop: "20vh",
+  boxShadow: theme.shadows[24],
+}));

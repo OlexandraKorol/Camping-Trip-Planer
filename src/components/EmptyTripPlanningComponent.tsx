@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material"
+import { styled } from "@mui/material/styles";
+import { Typography } from "@mui/material";
 import { CreateTripButton } from "./CustomButtons";
 
 interface IEmptyTripPlanningPage {
@@ -7,21 +8,26 @@ interface IEmptyTripPlanningPage {
 
 export const EmptyTripPlanningComponent: React.FC<IEmptyTripPlanningPage> = ({ onCreateTrip }) => {
   return (
-    <Box
-      sx={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        padding: 4,
-      }}
-    >
-      <Typography variant="inherit" component="h2" sx={{ mb: 2, color: "text.secondary", textAlign: "start" }}>
+    <Container>
+      <Title variant="inherit">
         Tap here to create your first trip!
-      </Typography>
-
+      </Title>
       <CreateTripButton onCreateTrip={onCreateTrip} />
-    </Box>
-  )
-}
+    </Container>
+  );
+};
+
+const Container = styled('div')(({ theme }) => ({
+  flex: 1,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "flex-start",
+  padding: theme.spacing(4),
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+  color: theme.palette.text.secondary,
+  textAlign: "start",
+}));
