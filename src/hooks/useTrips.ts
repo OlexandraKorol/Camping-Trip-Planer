@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import { TripData } from "../types/trips";
 
@@ -24,7 +24,11 @@ export const useTrips = () => {
   const editTrip = async (id: string, updatedTrip: TripData) => {
     const tripDoc = doc(db, "trips", id);
     await updateDoc(tripDoc, updatedTrip as Partial<TripData>);
-    fetchTrips();
+  
+ 
+    setTrips((prevTrips) =>
+      prevTrips.map((trip) => (trip.id === id ? { ...trip, ...updatedTrip } : trip))
+    );
   };
 
   const deleteTrip = async (id: string) => {
@@ -34,7 +38,9 @@ export const useTrips = () => {
   };
 
   const addTrip = async (trip: TripData) => {
-    await addDoc(tripsCollection, trip);
+    const newDocRef = doc(tripsCollection); 
+    await setDoc(newDocRef, { ...trip, tripId: newDocRef.id });
+    // await addDoc(tripsCollection, trip); Double check heeded
     fetchTrips();
   };
 
@@ -50,4 +56,3 @@ export const useTrips = () => {
     deleteTrip
   };
 };
-

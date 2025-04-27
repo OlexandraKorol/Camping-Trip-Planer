@@ -1,4 +1,4 @@
-import { Modal, Box, Button, Checkbox, FormControlLabel, Typography, Card, CardContent, Fab } from "@mui/material";
+import { Modal, Box, Button, Checkbox, FormControlLabel, Typography, Card, CardContent } from "@mui/material";
 import { TripData } from "../types/trips";
 import { CustomTextField } from "./CustomTextField";
 import { Link } from "react-router-dom";
@@ -111,7 +111,14 @@ export const NewTripModal: React.FC<INewTripModal> = ({ isOpen, handleClose, for
                     <Checkbox
                       name="campsiteBooked"
                       checked={formData.campsiteBooked}
-                      onChange={onChange}
+                      onChange={(e) =>
+                        onChange({
+                          target: {
+                            name: e.target.name,
+                            value: e.target.checked,
+                          },
+                        } as unknown as React.ChangeEvent<HTMLInputElement>)
+                      }
                     />
                   }
                   label={"Camping booked?"}

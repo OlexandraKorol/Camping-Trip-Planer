@@ -23,7 +23,7 @@ export const TripPlanning = () => {
   const { trips, addTrip, editTrip, deleteTrip } = useTrips();
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState<TripData>(emptyTrip);
-  const [errors, setErrors] = useState<{ [key: string]: string }>({}); 
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const validateForm = () => validateNewTripForm(formData, setErrors);
 
@@ -31,7 +31,12 @@ export const TripPlanning = () => {
     if (!validateForm()) {
       return;
     }
-    await addTrip(formData);
+
+    if (formData.id) {
+      await editTrip(formData.id, formData);
+    } else {
+      await addTrip(formData);
+    }
     setFormData(emptyTrip);
     setShowModal(false);
   };
@@ -59,8 +64,11 @@ export const TripPlanning = () => {
   };
 
   const handleEdit = (id: string) => {
-    setShowModal(true);
-    editTrip(id, formData);
+    const tripToEdit = trips.find((trip) => trip.id === id);
+    if (tripToEdit) {
+      setFormData(tripToEdit);
+      setShowModal(true);
+    }
   };
 
   const handleDelete = (id: string) => {
@@ -92,7 +100,10 @@ export const TripPlanning = () => {
 
       <NewTripModal
         isOpen={showModal}
-        handleClose={() => setShowModal(false)}
+        handleClose={() => {
+          setShowModal(false);
+          setFormData(emptyTrip);
+        }}
         formData={formData}
         setShowModal={setShowModal}
         handleSubmit={handleSubmit}
