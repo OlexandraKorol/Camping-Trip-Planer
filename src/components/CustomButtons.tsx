@@ -19,3 +19,19 @@ export const CreateTripButton: React.FC<CreateTripButtonProps> = ({ onCreateTrip
     </Button>
   )
 }
+
+interface CheckWeatherButtonProps {
+  onCheckButton: () => void;
+}
+
+export const CheckWeatherButton: React.FC<CheckWeatherButtonProps> = ({ onCheckButton }) => {
+  return (
+    <Button
+      onClick={onCheckButton}
+      variant="contained"
+      color="primary"
+      sx={{ml: 4 }} >
+        Check weather
+    </Button>
+  )
+}
