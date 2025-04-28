@@ -1,13 +1,6 @@
 export interface WeatherData {
-  location: {
+  location?: {
     name: string;
-    region: string;
-    country: string;
-    lat: number;
-    lon: number;
-    tz_id: string;
-    localtime_epoch: number;
-    localtime: string;
   };
   current: {
     temp_c: number;
@@ -24,5 +17,17 @@ export interface WeatherData {
     vis_km: number;
     pressure_mb: number;
     gust_kph: number;
-  };
+  },
+  day?: {
+    temp_c: number;
+    condition: {
+      text: string;
+      icon: string;
+    };
+    uv:number
+    maxwind_kph: number;
+    avghumidity: number;
+    maxtemp_c: number;
+    mintemp_c: number;
+  },
 }

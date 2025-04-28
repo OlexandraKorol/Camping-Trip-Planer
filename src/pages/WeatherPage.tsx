@@ -15,6 +15,8 @@ export const WeatherPage = () => {
     errorText,
     handleInputChange,
     onCheckWeather,
+    date,
+    handleDateChange
   } = useWeather();
 
   return (
@@ -23,17 +25,31 @@ export const WeatherPage = () => {
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <ActionContainer>
-        <CustomTextField
-          type="text"
-          placeholder="Enter city or location"
-          value={city}
-          required
-          onChange={handleInputChange}
-          name={"weather"}
-          error={error}
-          helperText={errorText}
-        />
+        <div className="flex flex-row justify-beetwen w-full gap-15 pb-3">
+          <CustomTextField
+            type="text"
+            placeholder="Enter city or location"
+            value={city}
+            required
+            onChange={handleInputChange}
+            name={"weather"}
+            error={error}
+          />
+          <CustomTextField
+            type="date"
+            placeholder="Select date"
+            value={date}
+            onChange={handleDateChange}
+            name={"date"}
+            error={error}
+          />
+        </div>
         <CheckWeatherButton onCheckButton={onCheckWeather} />
+        {error && (
+          <Typography variant="caption" textAlign="center" color="error">
+            {errorText}
+          </Typography>
+        )}
       </ActionContainer>
 
       {weather && !loading && <WeatherDetails weather={weather} />}

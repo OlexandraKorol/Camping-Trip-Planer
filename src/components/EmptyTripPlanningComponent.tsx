@@ -8,23 +8,14 @@ interface IEmptyTripPlanningPage {
 
 export const EmptyTripPlanningComponent: React.FC<IEmptyTripPlanningPage> = ({ onCreateTrip }) => {
   return (
-    <Container>
+    <div className="flex flex-1 flex-col justify-center items-start p-4">
       <Title variant="inherit">
         Tap here to create your first trip!
       </Title>
       <CreateTripButton onCreateTrip={onCreateTrip} />
-    </Container>
+    </div>
   );
 };
-
-const Container = styled('div')(({ theme }) => ({
-  flex: 1,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "flex-start",
-  padding: theme.spacing(4),
-}));
 
 const Title = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(2),

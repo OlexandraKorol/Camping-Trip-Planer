@@ -5,30 +5,50 @@ interface WeatherDetailsProps {
   weather: WeatherData;
 }
 
-export const WeatherDetails = ({ weather }: WeatherDetailsProps) => {
+export const WeatherDetails: React.FC<WeatherDetailsProps> = ({ weather }) => {
+  const isCurrentWeather = !!weather.current;
 
-  const weatherDetails = [
-    { label: "💨 Wind", value: `${weather.current.wind_kph} kph (${weather.current.wind_dir})` },
-    { label: "🌡️ Feels like", value: `${weather.current.feelslike_c}°C` },
-    { label: "💧 Humidity", value: `${weather.current.humidity}%` },
-    { label: "☔ Precipitation", value: `${weather.current.precip_mm} mm` },
-    { label: "🌞 UV Index", value: `${weather.current.uv}` },
-    { label: "👁️ Visibility", value: `${weather.current.vis_km} km` },
-    { label: "📈 Pressure", value: `${weather.current.pressure_mb} mb` },
-    { label: "💨 Gusts", value: `${weather.current.gust_kph} kph` },
-  ];
+  const temperature = isCurrentWeather
+    ? weather.current.temp_c
+    : weather.day?.temp_c;
+  const conditionText = isCurrentWeather
+    ? weather.current.condition.text
+    : weather.day?.condition.text;
+  const conditionIcon = isCurrentWeather
+    ? weather.current.condition.icon
+    : weather.day?.condition.icon;
+
+  const weatherDetails = isCurrentWeather
+    ? [
+      { label: "💨 Wind", value: `${weather.current.wind_kph} kph (${weather.current.wind_dir})` },
+      { label: "🌡️ Feels like", value: `${weather.current.feelslike_c}°C` },
+      { label: "💧 Humidity", value: `${weather.current.humidity}%` },
+      { label: "☔ Precipitation", value: `${weather.current.precip_mm} mm` },
+      { label: "🌞 UV Index", value: `${weather.current.uv}` },
+      { label: "👁️ Visibility", value: `${weather.current.vis_km} km` },
+      { label: "📈 Pressure", value: `${weather.current.pressure_mb} mb` },
+      { label: "💨 Gusts", value: `${weather.current.gust_kph} kph` },
+    ]
+    : [
+      { label: "💨 Max Wind", value: `${weather.day?.maxwind_kph} kph` },
+      { label: "💧 Avg Humidity", value: `${weather.day?.avghumidity}%` },
+      { label: "🌡️ Max Temp", value: `${weather.day?.maxtemp_c}°C` },
+      { label: "🌡️ Min Temp", value: `${weather.day?.mintemp_c}°C` },
+    ];
+
+  const locationName = weather.location ? weather.location.name : "Unknown Location";
 
   return (
-    <WeatherContainer className="mt-4">
+    <WeatherContainer>
       <WeatherTitle>
         <Typography gutterBottom sx={{ mb: 1.5 }} variant="h2" textAlign="center">
-          {weather.location.name}
+          {locationName}
         </Typography>
-        <img src={weather.current.condition.icon} alt="weather icon" />
+        {conditionIcon && <img src={conditionIcon} alt="weather icon" />}
       </WeatherTitle>
 
       <Typography gutterBottom variant="h5" textAlign="center">
-        {weather.current.temp_c}°C — {weather.current.condition.text}
+        {temperature}°C — {conditionText}
       </Typography>
 
       <Box sx={{ mt: 3, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
@@ -43,7 +63,7 @@ export const WeatherDetails = ({ weather }: WeatherDetailsProps) => {
 };
 
 const WeatherContainer = styled(Box)(({ theme }) => ({
-  width: '100%',
+  width: "100%",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -52,7 +72,7 @@ const WeatherContainer = styled(Box)(({ theme }) => ({
 }));
 
 const WeatherTitle = styled(Box)(({ theme }) => ({
-  width: '100%',
+  width: "100%",
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
